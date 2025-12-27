@@ -1,10 +1,38 @@
-# Python-generated files
+# --- Python cache/build ---
 __pycache__/
-*.py[oc]
-build/
-dist/
-wheels/
-*.egg-info
+*.py[cod]
+*$py.class
+.build/
+*.egg-info/
+.eggs/
 
-# Virtual environments
-.venv
+# --- Virtualenv / tools ---
+.venv/
+.envrc
+.python-version
+.env
+
+# --- Tests / reports ---
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.mypy_cache/
+.ruff_cache/
+.pytype/
+
+# --- Database files ---
+*.sqlite3
+*.db
+
+# --- Docker artefacts ---
+docker-data/
+celerybeat-schedule
+uvicorn.log
+localstack_data
+
+# --- SSL certificates ---
+server.test.pem
+machine.json
+server.test.pem.key
