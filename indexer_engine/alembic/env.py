@@ -1,10 +1,12 @@
 from logging.config import fileConfig
-from indexer_engine.app.config import settings
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
-from indexer_engine.app.infrastructure.db.db_base import BaseDB
 
 from alembic import context
+
+from indexer_engine.app.infrastructure.db.models.staging.evm_event_logs import EvmEventLogsDB  # noqa: F401
+from indexer_engine.app.config import settings
+from indexer_engine.app.infrastructure.db.db_base import BaseDB
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
