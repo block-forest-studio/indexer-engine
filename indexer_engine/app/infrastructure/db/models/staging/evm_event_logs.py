@@ -1,10 +1,8 @@
 from __future__ import annotations
 
-from datetime import datetime
 
 from sqlalchemy import (
     BigInteger,
-    DateTime,
     Integer,
     SmallInteger,
     Numeric,
@@ -72,12 +70,6 @@ class EvmEventLogsDB(BaseDB):
 
     """Number of the block in which the log was emitted."""
     block_number: Mapped[int] = mapped_column(BigInteger, nullable=False)
-
-    """Timestamp of the block that included the log (UTC, timezone-aware)."""
-    block_timestamp: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True),
-        nullable=False,
-    )
 
     # -------------------------------------------------------------------------
     # Transaction identity

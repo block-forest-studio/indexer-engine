@@ -17,7 +17,7 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-sync_url = settings.sync_database_url.replace("%", "%%")
+sync_url = settings.sync_database_url.replace("%", "%%")  # type: ignore
 config.set_main_option("sqlalchemy.url", sync_url)
 
 # add your model's MetaData object here

@@ -1,8 +1,7 @@
 """Config file."""
 from urllib.parse import quote_plus
-from uuid import UUID
 
-from pydantic import AnyHttpUrl, EmailStr, Field, SecretStr, model_validator
+from pydantic import Field, SecretStr, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
