@@ -19,3 +19,24 @@ class EvmEventLogsIndexer(Protocol):
         to_block: int,
     ) -> None:
         ...
+
+
+class AnalyticsEvmEventsIndexer(Protocol):
+    """
+    Port for indexing normalized EVM events into the analytics layer.
+
+    Implementations are responsible for transforming rows from
+    staging.evm_event_logs into analytics.evm_events in an idempotent,
+    set-based way.
+
+    The analytics layer represents a curated, query-optimized view of on-chain
+    activity.
+    """
+    async def index_events_for_block_range(
+        self,
+        *,
+        chain_id: int,
+        from_block: int,
+        to_block: int,
+    ) -> None:
+        ...

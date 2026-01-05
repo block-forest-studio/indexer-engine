@@ -5,6 +5,8 @@ from sqlalchemy import pool
 from alembic import context
 
 from indexer_engine.app.infrastructure.db.models.staging.evm_event_logs import EvmEventLogsDB  # noqa: F401
+from indexer_engine.app.infrastructure.db.models.analytics.evm_events import AnalyticsEvmEventsDB  # noqa: F401 
+from indexer_engine.app.infrastructure.db.models.analytics.event_signatures import AnalyticsEventSignaturesDB  # noqa: F401 
 from indexer_engine.app.config import settings
 from indexer_engine.app.infrastructure.db.db_base import BaseDB
 
@@ -50,6 +52,7 @@ def run_migrations_offline() -> None:
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
+        include_schemas=True,
     )
 
     with context.begin_transaction():
@@ -71,7 +74,7 @@ def run_migrations_online() -> None:
 
     with connectable.connect() as connection:
         context.configure(
-            connection=connection, target_metadata=target_metadata
+            connection=connection, target_metadata=target_metadata, include_schemas=True,
         )
 
         with context.begin_transaction():
