@@ -62,6 +62,14 @@ class AnalyticsEvmEventsDB(BaseDB):
     tx_from_address: Mapped[bytes] = mapped_column(BYTEA, nullable=False)
     tx_to_address: Mapped[bytes | None] = mapped_column(BYTEA, nullable=True)
     # -------------------------------------------------------------------------
+    # Raw event payload (topics + data)
+    # -------------------------------------------------------------------------
+    topic0: Mapped[bytes | None] = mapped_column(BYTEA, nullable=True)  # ZMIANA!
+    topic1: Mapped[bytes | None] = mapped_column(BYTEA, nullable=True)  # ZMIANA!
+    topic2: Mapped[bytes | None] = mapped_column(BYTEA, nullable=True)  # ZMIANA!
+    topic3: Mapped[bytes | None] = mapped_column(BYTEA, nullable=True)  # ZMIANA!
+    data: Mapped[bytes] = mapped_column(BYTEA, nullable=False)          # ZMIANA!
+    # -------------------------------------------------------------------------
     # Contract and event
     # -------------------------------------------------------------------------
     contract_address: Mapped[bytes] = mapped_column(BYTEA, nullable=False)

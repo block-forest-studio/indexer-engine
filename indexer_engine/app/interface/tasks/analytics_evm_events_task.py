@@ -21,11 +21,11 @@ async def index_analytics_evm_events_task(
     backend: str = "sqlalchemy",
 ) -> None:
     """
-    Task: indeksowanie danych do analytics.evm_events dla danego łańcucha i zakresu bloków.
+    Task: data indexing to analytics.evm_events for a given chain and block range.
 
-    - bierze dane ze staging.evm_event_logs,
-    - wzbogaca o event_name / event_signature,
-    - zapisuje do analytics.evm_events.
+    - takes data from staging.evm_event_logs,
+    - enriches with event_name / event_signature,
+    - writes to analytics.evm_events.
     """
     engine = create_app_async_engine()
     try:
