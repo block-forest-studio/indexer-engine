@@ -17,7 +17,7 @@ class BlockRange:
             raise ValueError("from_block must be <= to_block")
 
 
-async def index_evm_event_logs_for_block_range(
+async def index_staging_evm_event_logs_for_block_range(
     *,
     indexer: EvmEventLogsIndexer,
     chain_id: int,

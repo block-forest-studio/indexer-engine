@@ -12,7 +12,7 @@ from indexer_engine.app.infrastructure.db.models.analytics.event_signatures impo
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-ABI_PATH = PROJECT_ROOT / "indexer_engine" / "app" / "registry" / "abi" / "PoolManager.json"  # albo zostaw ./PoolManager.json, jeśli tak trzymasz
+ABI_PATH = PROJECT_ROOT / "indexer_engine" / "app" / "registry" / "abi" / "PoolManager.json"
 
 
 def event_signature(evt: dict) -> str:
@@ -26,9 +26,6 @@ async def seed_event_signatures() -> None:
         abi = json.load(f)
 
     events = [item for item in abi if item.get("type") == "event"]
-    # for e in events:
-    #     print(e)
-    #     print(" ")
 
     values: list[dict] = []
     for evt in events:

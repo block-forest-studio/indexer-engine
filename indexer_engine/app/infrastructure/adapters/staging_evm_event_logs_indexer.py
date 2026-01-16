@@ -69,7 +69,7 @@ _INSERT_EVM_EVENT_LOGS_SQL = text(
 )
 
 
-class SqlAlchemyEvmEventLogsIndexer:
+class SqlAlchemyStagingEvmEventLogsIndexer:
     """
     PostgreSQL/SQLAlchemy implementation of EvmEventLogsIndexer.
 

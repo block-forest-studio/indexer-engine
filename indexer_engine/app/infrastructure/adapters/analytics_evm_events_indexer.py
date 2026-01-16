@@ -59,6 +59,11 @@ class SqlAlchemyAnalyticsEvmEventsIndexer:
                 tx_from_address,
                 tx_to_address,
                 contract_address,
+                topic0,
+                topic1,
+                topic2,
+                topic3,
+                data,
                 event_name,
                 event_signature
             )
@@ -74,6 +79,11 @@ class SqlAlchemyAnalyticsEvmEventsIndexer:
                 l.tx_from,
                 l.tx_to,
                 l.address,
+                l.topic0,
+                l.topic1,
+                l.topic2,
+                l.topic3,
+                l.data,
                 COALESCE(es.event_name, 'unknown') AS event_name,
                 COALESCE(
                     es.event_signature,
