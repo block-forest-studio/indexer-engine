@@ -1,6 +1,8 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
 
-from indexer_engine.app.domain.ports.out import AnalyticsEvmEventsIndexer
+from indexer_engine.app.domain.ports.out import EvmEventLogsIndexer
 
 
 @dataclass(frozen=True)
@@ -15,14 +17,19 @@ class BlockRange:
             raise ValueError("from_block must be <= to_block")
 
 
-async def index_analytics_evm_events_for_block_range(
+async def index_evm_event_logs_for_block_range(
     *,
-    indexer: AnalyticsEvmEventsIndexer,
+    indexer: EvmEventLogsIndexer,
     chain_id: int,
     block_range: BlockRange,
 ) -> None:
+    """
+    Application-level use case for indexing EVM event logs into staging.
+
+    Orchestrates validation and calls the underlying indexer port.
+    """
     block_range.validate()
-    await indexer.index_events_for_block_range(
+    await indexer.index_block_range(
         chain_id=chain_id,
         from_block=block_range.from_block,
         to_block=block_range.to_block,

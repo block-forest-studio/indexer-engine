@@ -40,3 +40,16 @@ class AnalyticsEvmEventsIndexer(Protocol):
         to_block: int,
     ) -> None:
         ...
+
+
+class UniswapV4WalletSwapsIndexer(Protocol):
+    """
+    Port for indexing Uniswap v4 wallet swap projections into the domain layer.
+    """
+    async def index_swaps_for_block_range(
+        self,
+        *,
+        chain_id: int,
+        from_block: int,
+        to_block: int,
+    ) -> None: ...
