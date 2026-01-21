@@ -1,24 +1,16 @@
 from __future__ import annotations
 
-from typing import Literal
-
-from sqlalchemy import text
-from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
-
-from indexer_engine.app.config import settings
 from indexer_engine.app.domain.ports.out import EvmEventLogsIndexer
-from indexer_engine.app.infrastructure.factories.staging_evm_event_logs_indexer_factory import (
-    staging_evm_event_logs_indexer_factory,
-)
-from indexer_engine.app.application.services.index_staging_evm_event_logs_for_block_range import (
+from indexer_engine.app.infrastructure.factories.staging.evm_event_logs_indexer import evm_event_logs_indexer_factory
+from indexer_engine.app.application.services.staging.index_evm_event_logs_for_block_range import (
     BlockRange,
-    index_staging_evm_event_logs_for_block_range,
+    index_evm_event_logs_for_block_range,
 )
+from indexer_engine.app.application.services.analytics.block_bounds import resolve_block_bounds_from_table
 from indexer_engine.app.infrastructure.db.engine import create_app_async_engine
-from indexer_engine.app.application.services.block_bounds import resolve_block_bounds_from_table
 
 
-async def index_staging_evm_event_logs_task(
+async def index_evm_event_logs_task(
     *,
     chain_id: int,
     from_block: int | str,
@@ -43,12 +35,12 @@ async def index_staging_evm_event_logs_task(
             source_table="raw.logs",
         )
 
-        indexer: EvmEventLogsIndexer = staging_evm_event_logs_indexer_factory(
+        indexer: EvmEventLogsIndexer = evm_event_logs_indexer_factory(
             backend=backend,
             engine=engine,
         )
 
-        await index_staging_evm_event_logs_for_block_range(
+        await index_evm_event_logs_for_block_range(
             indexer=indexer,
             chain_id=chain_id,
             block_range=BlockRange(

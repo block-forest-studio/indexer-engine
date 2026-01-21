@@ -2,7 +2,9 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from indexer_engine.app.domain.ports.out import EvmEventLogsIndexer
+from indexer_engine.app.domain.ports.out import (
+    UniswapV4WalletSwapsIndexer,
+)
 
 
 @dataclass(frozen=True)
@@ -17,19 +19,14 @@ class BlockRange:
             raise ValueError("from_block must be <= to_block")
 
 
-async def index_staging_evm_event_logs_for_block_range(
+async def index_uniswap_v4_wallet_swaps_for_block_range(
     *,
-    indexer: EvmEventLogsIndexer,
+    indexer: UniswapV4WalletSwapsIndexer,
     chain_id: int,
     block_range: BlockRange,
 ) -> None:
-    """
-    Application-level use case for indexing EVM event logs into staging.
-
-    Orchestrates validation and calls the underlying indexer port.
-    """
     block_range.validate()
-    await indexer.index_block_range(
+    await indexer.index_swaps_for_block_range(
         chain_id=chain_id,
         from_block=block_range.from_block,
         to_block=block_range.to_block,
