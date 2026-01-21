@@ -78,7 +78,6 @@ class UniswapV4WalletSwapsDB(BaseDB):
 
     # Parties (if present in ABI/event args; otherwise can be filled later)
     sender: Mapped[bytes | None] = mapped_column(BYTEA, nullable=True)
-    recipient: Mapped[bytes | None] = mapped_column(BYTEA, nullable=True)
 
     # -------------------------------------------------------------------------
     # Amounts (Uniswap-style: typically signed int256)

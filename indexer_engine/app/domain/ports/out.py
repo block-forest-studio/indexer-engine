@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Protocol
+from typing import Protocol, Any
 
 
 class EvmEventLogsIndexer(Protocol):
@@ -53,3 +53,23 @@ class UniswapV4WalletSwapsIndexer(Protocol):
         from_block: int,
         to_block: int,
     ) -> None: ...
+
+
+class EvmEventDecoder(Protocol):
+    def decode(
+        self,
+        *,
+        topic0: bytes | None,
+        topic1: bytes | None,
+        topic2: bytes | None,
+        topic3: bytes | None,
+        data: bytes,
+    ) -> dict[str, Any] | None:
+        """
+        Decode an EVM log (topics + data) into a dict of typed fields.
+
+        Return:
+          - dict[str, Any] for decoded event fields
+          - None if the log is not decodable / not the expected event
+        """
+        ...
