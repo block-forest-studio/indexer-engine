@@ -44,6 +44,7 @@ class SqlAlchemyUniswapV4WalletSwapsIndexer:
             SELECT
                 e.chain_id,
                 e.block_number,
+                b.timestamp AS block_timestamp,
                 e.transaction_hash,
                 e.transaction_index,
                 e.log_index,
@@ -56,6 +57,9 @@ class SqlAlchemyUniswapV4WalletSwapsIndexer:
                 e.topic3,
                 e.data
             FROM analytics.evm_events e
+            JOIN analytics.blocks b
+              ON b.chain_id = e.chain_id
+             AND b.block_number = e.block_number
             WHERE e.chain_id = :chain_id
               AND e.block_number BETWEEN :from_block AND :to_block
               AND e.topic0 = :topic0
@@ -68,6 +72,7 @@ class SqlAlchemyUniswapV4WalletSwapsIndexer:
             INSERT INTO domain.uniswap_v4_wallet_swaps (
                 chain_id,
                 block_number,
+                block_timestamp,
                 transaction_hash,
                 transaction_index,
                 log_index,
@@ -85,6 +90,7 @@ class SqlAlchemyUniswapV4WalletSwapsIndexer:
             VALUES (
                 :chain_id,
                 :block_number,
+                :block_timestamp,
                 :transaction_hash,
                 :transaction_index,
                 :log_index,
@@ -136,6 +142,7 @@ class SqlAlchemyUniswapV4WalletSwapsIndexer:
                         {
                             "chain_id": r["chain_id"],
                             "block_number": r["block_number"],
+                            "block_timestamp": r["block_timestamp"],
                             "transaction_hash": r["transaction_hash"],
                             "transaction_index": r["transaction_index"],
                             "log_index": r["log_index"],

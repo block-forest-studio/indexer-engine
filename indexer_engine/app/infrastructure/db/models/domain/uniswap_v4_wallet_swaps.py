@@ -1,11 +1,15 @@
 from __future__ import annotations
 
+from datetime import datetime
+
 from sqlalchemy import (
     BigInteger,
     Integer,
     Numeric,
     Index,
     PrimaryKeyConstraint,
+    DateTime,
+    Text,
 )
 from sqlalchemy.dialects.postgresql import BYTEA
 from sqlalchemy.orm import Mapped, mapped_column
@@ -52,6 +56,15 @@ class UniswapV4WalletSwapsDB(BaseDB):
             "chain_id",
             "transaction_hash",
         ),
+
+        # Fast wallet timeline queries (most common API pattern)
+        Index(
+            "ix_uni_v4_swaps_wallet_time",
+            "wallet_address",
+            "block_timestamp",
+        ),
+
+
         {"schema": "domain"},
     )
 
@@ -60,6 +73,9 @@ class UniswapV4WalletSwapsDB(BaseDB):
     # -------------------------------------------------------------------------
     chain_id: Mapped[int] = mapped_column(Integer, nullable=False)
     block_number: Mapped[int] = mapped_column(BigInteger, nullable=False)
+    block_timestamp: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False
+    )
 
     transaction_hash: Mapped[bytes] = mapped_column(BYTEA, nullable=False)
     transaction_index: Mapped[int] = mapped_column(Integer, nullable=False)
