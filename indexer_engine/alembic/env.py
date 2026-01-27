@@ -9,6 +9,8 @@ from indexer_engine.app.infrastructure.db.models.analytics.evm_events import Ana
 from indexer_engine.app.infrastructure.db.models.analytics.event_signatures import AnalyticsEventSignaturesDB  # noqa: F401 
 from indexer_engine.app.infrastructure.db.models.analytics.blocks import AnalyticsBlocksDB  # noqa: F401 
 from indexer_engine.app.infrastructure.db.models.domain.uniswap_v4_wallet_swaps import UniswapV4WalletSwapsDB  # noqa: F401
+from indexer_engine.app.infrastructure.db.models.domain.uniswap_v4_pools import UniswapV4PoolsDB  # noqa: F401
+from indexer_engine.app.infrastructure.db.models.domain.tokens import TokensDB  # noqa: F401
 
 from indexer_engine.app.config import settings
 from indexer_engine.app.infrastructure.db.db_base import BaseDB

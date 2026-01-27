@@ -9,8 +9,8 @@ from indexer_engine.app.domain.ports.out import UniswapV4WalletSwapsIndexer
 from indexer_engine.app.infrastructure.adapters.domain.uniswap_v4_wallet_swaps_indexer import (
     SqlAlchemyUniswapV4WalletSwapsIndexer,
 )
-from indexer_engine.app.infrastructure.decoders.uniswap_v4.event_decoder import (
-    AbiUniswapV4EventDecoder,
+from indexer_engine.app.infrastructure.decoders.uniswap_v4.swap_decoder import (
+    SwapDecoder,
 )
 
 UniswapV4WalletSwapsIndexerFactory = Callable[[AsyncEngine], UniswapV4WalletSwapsIndexer]
@@ -43,7 +43,7 @@ def _make_sqlalchemy_indexer(
     - ABI-based events decoder (Uniswap v4 PoolManager ABI)
     - SQL indexer filtering by decoder.topic0 and inserting decoded rows into domain table
     """
-    decoder = AbiUniswapV4EventDecoder(abi_path=abi_path, event_name=event_name)
+    decoder = SwapDecoder(abi_path=abi_path, event_name=event_name)
 
     return SqlAlchemyUniswapV4WalletSwapsIndexer(
         engine=engine,

@@ -73,3 +73,20 @@ class EvmEventDecoder(Protocol):
           - None if the log is not decodable / not the expected event
         """
         ...
+
+
+class UniswapV4PoolsIndexer(Protocol):
+    """
+    Port for indexing Uniswap v4 pools registry into the domain layer.
+
+    Typically built from PoolManager Initialize events and persisted into
+    domain.uniswap_v4_pools in an idempotent way.
+    """
+
+    async def index_pools_for_block_range(
+        self,
+        *,
+        chain_id: int,
+        from_block: int,
+        to_block: int,
+    ) -> None: ...
