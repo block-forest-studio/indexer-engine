@@ -41,6 +41,18 @@ class Settings(BaseSettings):
             self.sync_database_url = f"postgresql://{user}:{password}@{host}:{port}/{db}"
 
         return self
+    
+    eth_provider_url: str = Field(..., alias="ETH_PROVIDER_URL")
+
+    def rpc_url(self, chain_id: int) -> str:
+        """Return provider URL based on chain_id."""
+        mapping = {
+            1: self.eth_provider_url,
+        }
+        try:
+            return mapping[chain_id]
+        except KeyError:
+            raise ValueError(f"No RPC URL defined for chain_id={chain_id}")
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 

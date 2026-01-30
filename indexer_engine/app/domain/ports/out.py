@@ -90,3 +90,44 @@ class UniswapV4PoolsIndexer(Protocol):
         from_block: int,
         to_block: int,
     ) -> None: ...
+
+
+class TokensIndexer(Protocol):
+    """
+    Port for indexing ERC-20 token metadata into the domain layer.
+
+    Implementations are responsible for:
+    - discovering token addresses (e.g. from domain.uniswap_v4_pools),
+    - fetching on-chain metadata via eth_call (symbol, decimals, name),
+    - upserting rows into domain.tokens.
+
+    This is a reference-data indexer, not event-based.
+    """
+
+    async def index_tokens(
+        self,
+        *,
+        chain_id: int,
+        limit: int | None = None,
+    ) -> None: ...
+
+
+class Erc20TokenMetadataFetcher(Protocol):
+    """
+    Low-level dependency used by the tokens adapter.
+
+    Implementations should perform eth_call against the ERC-20 contract and return:
+      - symbol (str | None)
+      - decimals (int | None)
+      - name (str | None)
+
+    token_address is 20-byte bytes (no 0x prefix).
+    """
+
+    async def fetch(
+        self,
+        *,
+        chain_id: int,
+        token_address: bytes,
+    ) -> dict[str, Any]:
+        ...
